@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "02-drf"
+version = "0.1.0"
+description = ""
+authors = ["<maciej.sitowski@gmail.com>"]
+readme = "README.md"
+packages = [{include = "02"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+django = "^4.2.2"
+djangorestframework = "^3.14.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
