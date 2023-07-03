@@ -1,0 +1,29 @@
+[{
+        "model": "shopping_list.ShoppingItem",
+        "fields": {
+            "name": "Apple",
+            "purchased": true
+        }
+    },
+    {
+        "model": "shopping_list.ShoppingItem",
+        "fields": {
+            "name": "B",
+            "purchased": false
+        }
+    },
+    {
+        "model": "shopping_list.ShoppingItem",
+        "fields": {
+            "name": "C",
+            "purchased": true
+        }
+    },
+    {
+        "model": "shopping_list.ShoppingItem",
+        "fields": {
+            "name": "D",
+            "purchased": false
+        }
+    }
+]
