@@ -25,8 +25,10 @@ SECRET_KEY = "django-insecure-58u=2g8mh$vg54obs6!qtw^c!_jlqofvm7o*u$xa!^&+g$6g7n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
 
 # Application definition
 
@@ -39,7 +41,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "rest_framework",
+    'rest_framework.authtoken',
+    "corsheaders",
+
     "shopping_list",
+    "missions",
+    "roles",
+    "questions",
 ]
 
 MIDDLEWARE = [
@@ -49,6 +57,8 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -102,6 +112,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
