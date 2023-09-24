@@ -3,6 +3,7 @@ from random import choice
 from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.decorators import action
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -11,11 +12,16 @@ from questions.api.serializers import CategorySerializer, QuestionSerializer
 from questions.models import Category, Question
 
 
+class DefaultPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+
+
 class QuestionViewSet(ModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
-    permission_classes = (IsAuthenticated, )
-
+    permission_classes = ()
+    pagination_class = DefaultPagination
 
     @action(detail=False, methods=["GET"], url_path='get_random', url_name='get_random')
     def get_random(self, request):
