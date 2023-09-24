@@ -14,10 +14,10 @@ services:
   web:
     stdin_open: true
     build:
-      context: ..\web
-      dockerfile: ..\web\docker\local\Dockerfile
+      context: ../P003.TeachMe-WEB
+      dockerfile: ../P003.TeachMe-WEB/docker/local/Dockerfile
     volumes:
-      - '..\web:/usr/src/app'
+      - '../P003.TeachMe-WEB:/usr/src/app'
       - '/usr/src/app/node_modules'
     ports:
       - "3020:3000"

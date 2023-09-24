@@ -26,10 +26,11 @@ class QuestionViewSet(ModelViewSet):
     @action(detail=False, methods=["GET"], url_path='get_random', url_name='get_random')
     def get_random(self, request):
         pks = Question.objects.values_list('pk', flat=True)
-        random_pk = choice(pks)
-        question = Question.objects.get(pk=random_pk)
-        return Response(self.serializer_class(question).data, status=status.HTTP_200_OK)
-
+        if pks:
+            random_pk = choice(pks)
+            question = Question.objects.get(pk=random_pk)
+            return Response(self.serializer_class(question).data, status=status.HTTP_200_OK)
+        return Response({'status': 'details'}, status=status.HTTP_404_NOT_FOUND)
 
 class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
