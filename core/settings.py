@@ -24,14 +24,17 @@ SECRET_KEY = "django-insecure-58u=2g8mh$vg54obs6!qtw^c!_jlqofvm7o*u$xa!^&+g$6g7n
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://localhost:3020",
 ]
+if DEBUG:
+    import socket  # only if you haven't already imported this
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -43,6 +46,8 @@ INSTALLED_APPS = [
     "rest_framework",
     'rest_framework.authtoken',
     "corsheaders",
+    "debug_toolbar",
+    "drf_yasg",
 
     "shopping_list",
     "missions",
@@ -51,6 +56,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
