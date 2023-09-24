@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    command: /start
+    volumes:
+      - .:/app
+    ports:
+      - "8020:8000"
+
+  web:
+    stdin_open: true
+    build:
+      context: ..\web
+      dockerfile: ..\web\docker\local\Dockerfile
+    volumes:
+      - '..\web:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - "3020:3000"
+    environment:
+      - WATCHPACK_POLLING=true
+
+
