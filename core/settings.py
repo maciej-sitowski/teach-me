@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -92,10 +93,25 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "postgres",  # The database name (skip the leading '/')
+        'USER': 'postgres.qtbtxfapbpkvormweems', 
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),  # The database password
+        'HOST': "aws-0-us-east-1.pooler.supabase.com",   # The database host
+        'PORT': "6543",       # The database port
+        'OPTIONS': {
+            'sslmode': 'require',  # Ensure SSL is used
+        },
     }
 }
 
