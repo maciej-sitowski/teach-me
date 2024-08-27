@@ -38,10 +38,9 @@ RUN chmod +x /start
 
 WORKDIR /app
 EXPOSE 8000
-
-RUN ls
+COPY . /app/
 RUN /opt/venv/bin/python3 manage.py migrate
-RUN /opt/venv/bin/python3 manage.py collectstatic --noinput
-ENTRYPOINT /opt/venv/bin/python3 manage.py runserver 0.0.0.0:8000
+RUN /opt/venv/bin/python3 /app/manage.py collectstatic --noinput
+ENTRYPOINT /opt/venv/bin/python3 /app/manage.py runserver 0.0.0.0:8000
 
 # ENTRYPOINT ["/entrypoint"]
