@@ -101,14 +101,13 @@ WSGI_APPLICATION = "core.wsgi.application"
 #     }
 # }
 
-print(os.getenv('DATABASE_PASSWORD'))
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': "postgres",  # The database name (skip the leading '/')
         'USER': 'postgres.qtbtxfapbpkvormweems', 
-        'PASSWORD': 'test',  # The database password
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),  # The database password
         'HOST': "aws-0-us-east-1.pooler.supabase.com",   # The database host
         'PORT': "6543",       # The database port
         'OPTIONS': {
