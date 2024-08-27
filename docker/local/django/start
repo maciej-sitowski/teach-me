@@ -4,6 +4,11 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+echo "Applying database migrations..."
 /opt/venv/bin/python3 manage.py migrate
+
+echo "Collecting static files..."
 /opt/venv/bin/python3 /app/manage.py collectstatic --noinput
+
+echo "Starting Django development server..."
 /opt/venv/bin/python3 manage.py runserver 0.0.0.0:8000
