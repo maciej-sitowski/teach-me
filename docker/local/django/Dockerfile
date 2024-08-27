@@ -37,4 +37,9 @@ RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
 WORKDIR /app
-ENTRYPOINT ["/entrypoint"]
+EXPOSE 8000
+RUN python manage.py migrate
+RUN python manage.py collectstatic --noinput
+ENTRYPOINT /opt/venv/bin/python3 manage.py runserver 0.0.0.0:8000
+
+# ENTRYPOINT ["/entrypoint"]
