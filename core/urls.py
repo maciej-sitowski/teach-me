@@ -36,7 +36,6 @@ schema_view = get_schema_view(
 
 api_urlpatterns = [
     path("", include(("missions.urls", "missions"), namespace="missions")),
-    path("", include("shopping_list.urls")),
     path("", include(("roles.urls", "roles"), namespace="roles")),
     path("", include(("questions.urls", "questions"), namespace="questions")),
 ]
