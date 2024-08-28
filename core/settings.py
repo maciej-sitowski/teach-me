@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "drf_yasg",
 
-    "shopping_list",
     "missions",
     "roles",
     "questions",
