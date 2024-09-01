@@ -163,3 +163,14 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# import dynaconf  # noqa
+# settings = dynaconf.DjangoDynaconf(
+#     __name__,
+#     ENVVAR_PREFIX_FOR_DYNACONF='PROJECTNAME',
+#     ENV_SWITCHER_FOR_DYNACONF='PROJECTNAME_ENV',
+#     ENVVAR_FOR_DYNACONF='PROJECTNAME_SETTINGS',
+#     settings_file='/config/settings.toml',
+# )
+# # HERE ENDS DYNACONF EXTENSION LOAD (No more code below this line)
+
+# print(settings.other_value)

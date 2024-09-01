@@ -1,0 +1,8 @@
+
+[my_default]
+test_value = "test value from default"
+other_value = "other value from default"
+
+[development]
+# no test_value here
+other_value = "other value from dev"
