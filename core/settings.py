@@ -30,6 +30,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:3020",
 ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://teach-me-2zxu.onrender.com',
+    # Add other domains if needed
+]
 if DEBUG:
     import socket  # only if you haven't already imported this
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
