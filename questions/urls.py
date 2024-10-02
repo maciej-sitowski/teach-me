@@ -20,7 +20,7 @@ questions_router.register(
 
 
 urlpatterns = [
-    path("questions/", include(questions_router.urls), name='questions'),
-    path("categories/", include(categories_router.urls), name='categories'),
+    path("", include(questions_router.urls), name='questions'),
+    path("", include(categories_router.urls), name='categories'),
 ]
 

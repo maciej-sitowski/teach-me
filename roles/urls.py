@@ -6,7 +6,7 @@ from roles  .api.viewsets import RoleViewSet
 
 roles_router = routers.DefaultRouter()
 roles_router.register(
-    prefix="roles",
+    prefix="",
     viewset=RoleViewSet,
     basename="roles",
 )

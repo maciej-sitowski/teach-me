@@ -6,7 +6,7 @@ from missions.api.viewsets import MissionViewSet
 
 missions_router = routers.DefaultRouter()
 missions_router.register(
-    prefix="missions",
+    prefix="",
     viewset=MissionViewSet,
     basename="mission",
 )
