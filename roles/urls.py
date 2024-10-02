@@ -12,6 +12,6 @@ roles_router.register(
 )
 
 urlpatterns = [
-    path("", include(roles_router.urls))
+    path("questions", include(roles_router.urls))
 ]
 

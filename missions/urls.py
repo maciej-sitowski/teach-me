@@ -12,6 +12,6 @@ missions_router.register(
 )
 
 urlpatterns = [
-    path("", include(missions_router.urls))
+    path("missions", include(missions_router.urls))
 ]
 

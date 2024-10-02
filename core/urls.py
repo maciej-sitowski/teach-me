@@ -35,18 +35,12 @@ schema_view = get_schema_view(
    permission_classes=[permissions.AllowAny],
 )
 
-api_urlpatterns = [
-    path("", include("missions.urls")),
-    path("", include("roles.urls")),
-    path("", include("questions.urls")),
-]
-
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-token-auth/", obtain_auth_token, name="api_token_auth"),
-    path("api/missions/", include("missions.urls")),
-    path("api/roles/", include("roles.urls")),
-    path("api/questions/", include("questions.urls")),
+    path("api/", include("missions.urls")),
+    path("api/", include("roles.urls")),
+    path("api/", include("questions.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
