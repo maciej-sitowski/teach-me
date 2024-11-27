@@ -23,5 +23,20 @@ services:
       - "3020:3000"
     environment:
       - WATCHPACK_POLLING=true
+  
+  postgres:
+    image: postgres:15  # Use a specific version of PostgreSQL
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"  # Map container's port 5432 to host's port 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persist data in a Docker volume
 
+volumes:
+  postgres_data:
 

@@ -1,4 +1,4 @@
-FROM python:3.11-slim-buster
+FROM python:3.12-slim-buster
 
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -17,10 +17,10 @@ RUN apt-get update \
 
 # Install poetry and python packages
 COPY poetry.lock pyproject.toml ./
-RUN curl -sSL https://install.python-poetry.org | python3.11 \
+RUN curl -sSL https://install.python-poetry.org | python3.12 \
     && python3 -m venv /opt/venv \
     && python3 -m pip install pip --upgrade \
-    && rm -rf /var/cache/yum /Python-3.11
+    && rm -rf /var/cache/yum /Python-3.12
 ENV PATH="/opt/venv/bin:/root/.poetry/bin:/opt/app-root/src/.poetry/bin/:/root/.local/bin:${PATH}"
 RUN . /opt/venv/bin/activate \
     && /opt/venv/bin/python3 -m pip install --upgrade pip \
@@ -39,8 +39,5 @@ RUN chmod +x /start
 WORKDIR /app
 EXPOSE 8000
 
-RUN /opt/venv/bin/python3 manage.py migrate
-RUN /opt/venv/bin/python3 /app/manage.py collectstatic --noinput
-ENTRYPOINT /opt/venv/bin/python3 /app/manage.py runserver 0.0.0.0:8000
-
-# ENTRYPOINT ["/entrypoint"]
+RUN alembic upgrade head
+ENTRYPOINT uvicorn app.main:app --reload --port 8011

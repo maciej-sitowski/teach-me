@@ -6,20 +6,20 @@ authors = ["<maciej.sitowski@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
-django = "^4.2.2"
-djangorestframework = "^3.14.0"
-django-cors-headers = "^4.2.0"
-pytest = "^7.4.0"
-pytest-django = "^4.5.2"
-blue = "^0.9.1"
-pyjwt = "^2.8.0"
-django-debug-toolbar = "^4.2.0"
-drf-yasg = {extras = ["validation"], version = "^1.21.7"}
-gunicorn = "^23.0.0"
-psycopg2 = "^2.9.9"
-dynaconf = {extras = ["yaml"], version = "^3.2.6"}
+python = "^3.12"
+fastapi = {extras = ["all"], version = "^0.115.5"}
+uvicorn = "^0.32.0"
+sqlmodel = "^0.0.22"
+psycopg2 = "^2.9.10"
+alembic = "^1.14.0"
+fastapi-pagination = "^0.12.32"
+passlib = "^1.7.4"
+bcrypt = "3.2.2"
+python-jose = "^3.3.0"
 
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
 
 [build-system]
 requires = ["poetry-core"]
