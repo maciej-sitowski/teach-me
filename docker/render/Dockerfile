@@ -23,7 +23,7 @@ RUN curl -sSL https://install.python-poetry.org | python3.12 \
     && rm -rf /var/cache/yum /Python-3.12
 ENV PATH="/opt/venv/bin:/root/.poetry/bin:/opt/app-root/src/.poetry/bin/:/root/.local/bin:${PATH}"
 RUN . /opt/venv/bin/activate \
-    && /opt/venv/bin/python3 -m pip install --upgrade pip \
+    && /opt/venv/bin/python3.12 -m pip install --upgrade pip \
     && /opt/venv/bin/pip install poetry gunicorn uvicorn \
     && /opt/venv/bin/poetry install
 
