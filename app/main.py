@@ -10,6 +10,7 @@ app.include_router(user.router)
 
 origins = [
     "http://localhost:3000",  # React dev server
+    "https://teach-me-web.onrender.com",        # React dev server
 ]
 
 app.add_middleware(
