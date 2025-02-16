@@ -1,10 +1,11 @@
 from app.pagination import PaginatedResponse
 from sqlmodel import Session, select
 from app.models.questions import Question
-from fastapi_pagination import Page, add_pagination, paginate
+from fastapi_pagination import paginate
 
 
 def create_question(session: Session, question: Question) -> Question:
+    """Create a new question and save it to the database"""
     session.add(question)
     session.commit()
     session.refresh(question)
