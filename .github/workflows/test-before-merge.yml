@@ -1,0 +1,32 @@
+name: Run Tests Before Merge
+
+on:
+  pull_request:
+    branches:
+      - master  # Runs tests before merging into master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'  # Adjust based on your project
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH  # Ensure Poetry is in PATH
+
+      - name: Install Dependencies with Poetry
+        run: |
+          poetry install --no-interaction --no-root  # Install dependencies
+
+      - name: Run Tests
+        run: |
+          poetry run pytest tests/  # Adjust the path to your test directory
