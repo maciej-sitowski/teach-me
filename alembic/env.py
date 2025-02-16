@@ -1,7 +1,8 @@
 from logging.config import fileConfig
 from alembic import context
 from sqlmodel import SQLModel
-from app.database import DATABASE_URL, engine
+from app.database import engine
+from .config.settings import settings
 from app.models.user import User
 from app.models.questions import Question
 
@@ -18,7 +19,7 @@ fileConfig(config.config_file_name)
 target_metadata = SQLModel.metadata
 
 # Define the database URL dynamically
-config.set_main_option("sqlalchemy.url", DATABASE_URL)
+config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode."""
