@@ -2,9 +2,7 @@ from logging.config import fileConfig
 from alembic import context
 from sqlmodel import SQLModel
 from app.database import engine
-from .config.settings import settings
-from app.models.user import User
-from app.models.questions import Question
+from app.config.settings import settings
 
 
 # this is the Alembic Config object, which provides
