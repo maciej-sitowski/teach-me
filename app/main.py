@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_pagination import add_pagination
-from app.routers import questions, auth, user
+from app.routers import questions, auth, user, tags
 
 app = FastAPI()
 app.include_router(questions.router)
 app.include_router(auth.router)
 app.include_router(user.router)
+app.include_router(tags.router)
 
 origins = [
     "http://localhost:3000",  # React dev server
