@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException
 from app.models.questions import Question
 from app.database import get_session
-from app.crud.questions import create_question, get_questions, update_question, get_question
+from app.crud.questions import create_question, get_questions, get_random_question, search_questions, update_question, get_question
 from sqlmodel import Session, select
 from fastapi import APIRouter
 from fastapi_pagination import Page
@@ -53,3 +53,17 @@ def delete_question(question_id: int, session: Session = Depends(get_session)):
     session.commit()
 
     return {"detail": "Question deleted successfully"}
+
+
+@router.get("/search/", response_model=Page[Question])
+def search_questions_endpoint(search_text: str, session: Session = Depends(get_session)):
+    return search_questions(session, search_text)
+
+
+@router.get("/random/", response_model=Question)
+def get_random_question_endpoint(session: Session = Depends(get_session)):
+    try:
+        question = get_random_question(session)
+        return question
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
