@@ -2,6 +2,7 @@ from app.pagination import PaginatedResponse
 from sqlmodel import Session, select
 from app.models.questions import Question
 from fastapi_pagination import paginate
+import sqlalchemy
 
 
 def create_question(session: Session, question: Question) -> Question:
@@ -14,6 +15,14 @@ def create_question(session: Session, question: Question) -> Question:
 
 def get_questions(session: Session) -> list[Question]:
     statement = select(Question).order_by(Question.created_at)
+    results = session.exec(statement).all()
+    return paginate(results)
+
+
+def search_questions(session: Session, search_text: str) -> list[Question]:
+    statement = select(Question).where(
+        Question.title.ilike(f"%{search_text}%") | Question.answer.ilike(f"%{search_text}%")
+    ).order_by(Question.created_at)
     results = session.exec(statement).all()
     return paginate(results)
 
@@ -54,3 +63,11 @@ def delete_question(session: Session, question_id: int) -> Question:
     session.commit()
     session.refresh(question)
     return question
+
+
+def get_random_question(session: Session) -> Question:
+    statement = select(Question).order_by(sqlalchemy.func.random()).limit(1)
+    result = session.exec(statement).first()
+    if not result:
+        raise ValueError("No questions available")
+    return result
