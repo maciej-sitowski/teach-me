@@ -5,24 +5,26 @@ services:
     build:
       context: .
       dockerfile: ./docker/local/django/Dockerfile
-    command: /start
+    command: /src/start
     volumes:
-      - .:/app
+      - ./app:/src/app/
     ports:
       - "8020:8000"
+    env_file:
+      - .env
 
-  web:
-    stdin_open: true
-    build:
-      context: ../P003.TeachMe-WEB
-      dockerfile: ../P003.TeachMe-WEB/docker/local/Dockerfile
-    volumes:
-      - '../P003.TeachMe-WEB:/usr/src/app'
-      - '/usr/src/app/node_modules'
-    ports:
-      - "3020:3000"
-    environment:
-      - WATCHPACK_POLLING=true
+  # web:
+  #   stdin_open: true
+  #   build:
+  #     context: ../P003.TeachMe-WEB/teach-me/
+  #     dockerfile: ../P003.TeachMe-WEB/teach-me/docker/local/Dockerfile
+  #   volumes:
+  #     - '../P003.TeachMe-WEB/teach-me:/usr/src/app'
+  #     - '/usr/src/app/node_modules'
+  #   ports:
+  #     - "3020:3000"
+  #   environment:
+  #     - WATCHPACK_POLLING=true
   
   postgres:
     image: postgres:15  # Use a specific version of PostgreSQL
