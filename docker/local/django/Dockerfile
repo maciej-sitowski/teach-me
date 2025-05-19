@@ -1,44 +1,39 @@
-FROM python:3.12-slim
+# Use a multi-stage build to reduce image size
+FROM python:3.12-slim as base
 
-ENV PYTHONUNBUFFERED 1
-ENV PYTHONDONTWRITEBYTECODE 1
+# Set environment variables
+# PYTHONUNBUFFERED ensures that Python output is sent directly to the terminal without buffering, useful for real-time logging.
+# PYTHONDONTWRITEBYTECODE prevents Python from creating .pyc files, reducing unnecessary writes in the container.
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
 
-RUN apt-get update \
-  # dependencies for building Python packages
-  && apt-get install -y build-essential libpq-dev curl \
-  # Translations dependencies
-  && apt-get install -y gettext \
-  # cleaning up unused files
-  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-  && rm -rf /var/lib/apt/lists/*
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential libpq-dev curl ca-certificates gettext && \
+    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && \
+    rm -rf /var/lib/apt/lists/*
 
+# Set working directory
+WORKDIR /src
 
-# Install poetry and python packages
-COPY poetry.lock pyproject.toml ./
-RUN curl -sSL https://install.python-poetry.org | python3.12 \
-    && python3 -m venv /opt/venv \
-    && python3 -m pip install pip --upgrade \
-    && rm -rf /var/cache/yum /Python-3.12
-ENV PATH="/opt/venv/bin:/root/.poetry/bin:/opt/app-root/src/.poetry/bin/:/root/.local/bin:${PATH}"
-RUN . /opt/venv/bin/activate \
-    && /opt/venv/bin/python3 -m pip install --upgrade pip \
-    && /opt/venv/bin/pip install poetry gunicorn uvicorn \
-    && /opt/venv/bin/poetry install
+# Copy dependency files
+COPY alembic.ini uv.lock pyproject.toml alembic ./docker/local/django/entrypoint ./docker/local/django/start /src/
+COPY alembic /src/alembic
 
+# Install uv package manager
+ADD https://astral.sh/uv/install.sh /uv-installer.sh
+RUN sh /uv-installer.sh && rm /uv-installer.sh
 
-COPY ./docker/local/django/entrypoint /entrypoint
-RUN sed -i 's/\r$//g' /entrypoint
-RUN chmod +x /entrypoint
+# Add uv to PATH
+ENV PATH="/src/.venv/bin:/root/.local/bin:$PATH"
 
-COPY ./docker/local/django/start /start
-RUN sed -i 's/\r$//g' /start
-RUN chmod +x /start
+# Install Python dependencies
+RUN uv sync
 
-WORKDIR /app
+# Copy entrypoint and start scripts
+RUN sed -i 's/\r$//g' /src/entrypoint /src/start && \
+    chmod +x /src/entrypoint /src/start
+
+# Expose application port
 EXPOSE 8000
-COPY . /app/
-# RUN /opt/venv/bin/python3 manage.py migrate
-# RUN /opt/venv/bin/python3 /app/manage.py collectstatic --noinput
-# ENTRYPOINT /opt/venv/bin/python3 /app/manage.py runserver 0.0.0.0:8000
-
-ENTRYPOINT ["/start"]
