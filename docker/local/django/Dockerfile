@@ -42,10 +42,14 @@ EXPOSE 8000
 RUN pwd
 RUN ls -la /
 RUN ls -la /src
-RUN ls -la /src/app
 
 
 FROM base as production
 
 # Copy application code
 COPY ./app /src/app
+
+RUN pwd
+RUN ls -la /
+RUN ls -la /src
+RUN ls -la /src/app
