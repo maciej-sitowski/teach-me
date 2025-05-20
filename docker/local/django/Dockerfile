@@ -39,6 +39,10 @@ RUN sed -i 's/\r$//g' /src/entrypoint /src/start && \
 EXPOSE 8000
 
 
+RUN pwd
+RUN ls -la /src
+RUN ls -la /src/app
+
 
 FROM base as production
 
