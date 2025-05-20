@@ -39,6 +39,7 @@ RUN sed -i 's/\r$//g' /src/entrypoint /src/start && \
 EXPOSE 8000
 
 
+
 FROM base as production
 
 # Copy application code
