@@ -36,6 +36,7 @@ RUN sed -i 's/\r$//g' /src/entrypoint /src/start && \
     chmod +x /src/entrypoint /src/start
 
 # Expose application port
+<<<<<<< HEAD
 EXPOSE 8000
 
 
@@ -44,3 +45,6 @@ FROM base as production
 
 # Copy application code
 COPY app /src/app
+=======
+EXPOSE 8000
+>>>>>>> 2f54ebca82cb954e3a7cb25119239dd598c2cbaa
