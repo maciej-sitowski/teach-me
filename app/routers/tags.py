@@ -1,5 +1,6 @@
 from app.crud.tags import create_tag, delete_tag, get_tag, get_tags, update_tag
 from app.models.tags import Tag
+from app.schemas.tag import TagCreate
 from fastapi import Depends, HTTPException
 from app.database import get_session
 from sqlmodel import Session
@@ -21,7 +22,7 @@ def read_tag(tag_id: int, session: Session = Depends(get_session)):
 
 
 @router.post("/")
-def create_new_tag(tag: Tag, session: Session = Depends(get_session)):
+def create_new_tag(tag: TagCreate, session: Session = Depends(get_session)):
     return create_tag(session, tag)
 
 

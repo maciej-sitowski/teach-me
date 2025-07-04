@@ -18,8 +18,12 @@ def get_tag(session: Session, tag_id: int) -> Tag:
     return tag
 
 
-def create_tag(session: Session, tag: Tag) -> Tag:
+def create_tag(session: Session, tag_data) -> Tag:
     """Create a new tag and save it to the database"""
+    if isinstance(tag_data, dict):
+        tag = Tag(**tag_data)
+    else:
+        tag = Tag(**tag_data.dict())
     session.add(tag)
     session.commit()
     session.refresh(tag)

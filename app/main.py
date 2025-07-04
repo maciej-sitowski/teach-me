@@ -11,6 +11,7 @@ app.include_router(tags.router)
 
 origins = [
     "http://localhost:3000",  # React dev server
+    "http://localhost:3051",  # React dev server
     "https://teach-me-web.onrender.com",        # React dev server
 ]
 

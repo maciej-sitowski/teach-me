@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str
 
     class Config:
-        env = os.getenv("ENV")
+        env = os.getenv("ENV", 'local')
         env_file = None if env == "production" else f"app/config/.env.{env}"
         
 settings = Settings()

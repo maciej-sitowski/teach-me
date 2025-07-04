@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - "8020:8000"
+      - "8051:8000"
 
   web:
     stdin_open: true
